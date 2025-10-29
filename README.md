@@ -15,14 +15,13 @@ The app also integrates with the Open Library Covers API to fetch book cover ima
 
 
 ## 🧩 Tech Stack
-* Layer	Technology
-* Backend	Node.js, Express.js
-* Database	PostgreSQL
-* Templating	EJS
-* Frontend	HTML, CSS, JavaScript
-* Environment	dotenv
-* API	Open Library Covers API
-* Version Control	Git
+* Backend-Node.js, Express.js
+* Database-PostgreSQL
+* Templating-EJS
+* Frontend-HTML, CSS, JavaScript
+* Environment-dotenv
+* API-Open Library Covers API
+* Version Control-Git
 
 ## 🗄️ Database Setup
 Prerequisites
@@ -36,8 +35,8 @@ Save this as database_schema.sql (you can import it in pgAdmin or run it from ps
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255),
-    identifier VARCHAR(100),
     id_type VARCHAR(50),
+    Id_number INT,
     image_path TEXT,
     rating INT,
     start_date DATE,
@@ -78,11 +77,11 @@ Each book:
 # 🧑‍💻 Contributing
 * Fork the repository
 * Create your feature branch 
-git checkout -b feature/awesome-feature
+(git checkout -b feature/awesome-feature)
 * Commit your changes
-git commit -m "Add awesome feature"
+(git commit -m "Add awesome feature")
 * Push to the branch
-git push origin feature/awesome-feature
+(git push origin feature/awesome-feature)
 * Open a Pull Request
 ### 🪪 License
 This project is licensed under the MIT License
