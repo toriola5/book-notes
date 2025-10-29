@@ -63,3 +63,26 @@ CREATE TABLE notes (
 📘 One-to-Many:
 Each book can have many notes.
 Each note belongs to one book (notes.book_id → books.id).
+
+### ß🧠 How It Works
+* The user adds a new book by entering the title, author, and identifier.
+* The app fetches the cover image from the Open Library Covers API.
+* If successful, the image is downloaded and saved to public/uploads/; otherwise, the image URL is stored in the database.
+* The home page lists all books.
+Each book:
+* Shows its completion and rating status.
+* Allows users to rate and mark as completed.
+* Lets users add and view chapter-based notes.
+* Dark mode toggles automatically if your system prefers dark theme or manually via a button.
+
+# Contributing
+* Fork the repository
+* Create your feature branch 
+git checkout -b feature/awesome-feature
+* Commit your changes
+git commit -m "Add awesome feature"
+* Push to the branch
+git push origin feature/awesome-feature
+* Open a Pull Request
+### 🪪 License
+This project is licensed under the MIT License
