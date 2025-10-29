@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/add" method="POST" id="addBookForm" hidden>
+       <label for="booktitle">Book Title</label> <input type="text" name="title" id="booktitle" required> 
+       <label for="authorname">Authors Name</label><input type="text" name="author" id="authorname" required>
+
+       <label>Ratings</label>
+       <div class="star-rating" id="form-star-rating">
+           <% for (let i = 1; i <= 5; i++) { %>
+               <span class="star" data-value="<%= i %>">☆</span>
+           <% } %>
+           <input type="hidden" name="rating" id="rating-input" required>
+       </div>
+
+        <label for="startdate">Start Date</label> <input type="date" id="startdate" name="startdate" max="<%= new Date().toISOString().split('T')[0] %>" required>
+        <label for="idnumber">Unique Identifier Number</label><input id="idnumber" type="text" name="idnumber" required>
+        <label for="identifier">Identifier Type</label> <select name="identifier" required>
+            <option value="">Select Identifier</option>
+           <% identifiers.forEach(s => { %>
+                <option value="<%= s %>"> <%= s %></option>
+         <%   }) %>
+        </select>
+        <button type="submit">submit</button>
+    </form>
+
+    
+
+    <form id="filterForm" action="/filter-books" method="GET" hidden>
+    <label for="ratingFilter">Rating:</label>
+    <select name="rating" id="ratingFilter">
+        <option value="">Any</option>
+        <% for(let i=1; i<=5; i++) { %>
+            <option value="<%= i %>"><%= i %></option>
+        <% } %>
+    </select>
+
+    <label for="completedFilter">Completed:</label>
+    <select name="completed" id="completedFilter">
+        <option value="">Any</option>
+        <option value="true">Completed</option>
+        <option value="false">Not Completed</option>
+    </select>
+
+    <button type="submit">Filter</button>
+    <a href="/" style="margin-left:10px;">View All Books</a>
+</form>
+
+<div class="actionables">
+    <button id="toggleDarkMode" type="button">Toggle Dark Mode</button>
+    <button id="showQueryFormBtn" type="button">Query Books</button>
+    <button id="showFormBtn">Add New Book</button>
+</div>
+
+   <div class="books-container">
+   <% data.forEach(s => { %>
+    <div class="book-with-notes">
+        <!-- Book card -->
+        <div class="books">
+            <img src="<%= s.image_path %>" alt="<%= s.title %>">
+            <p>Book Title: <%= s.title %></p> 
+            <p>Authors Name: <%= s.author %></p>
+            <% if (s.rating) { %>
+                <p class="rating">
+                    <% for (let i = 1; i <= 5; i++) { %>
+                        <span class="star <%= i <= s.rating ? 'gold' : '' %>"><%= i <= s.rating ? "★" : "☆" %></span>
+                    <% } %>
+                </p>
+            <% } else { %>
+                <p class="rating">Rating: Not provided</p>
+                <div class="star-rating" data-id="<%= s.id %>">
+                    <span class="star" data-value="1">☆</span>
+                    <span class="star" data-value="2">☆</span>
+                    <span class="star" data-value="3">☆</span>
+                    <span class="star" data-value="4">☆</span>
+                    <span class="star" data-value="5">☆</span>
+                </div>
+            <% } %>
+            <p>Started Reading: <%= new Date(s.start_date).toLocaleDateString('en-US', { weekday: 'long', day: '2-digit', year: 'numeric' }) %></p>
+            <% if (s.is_complited) { %>
+                <button class="toggle-btn" data-id="<%= s.id %>" data-status="true">Mark as Not Completed</button>
+            <% } else { %>
+                <button class="toggle-btn" data-id="<%= s.id %>" data-status="false">Mark as Completed</button>
+            <% } %>
+            <button class="show-notes-btn" data-id="<%= s.id %>">Show Notes</button>
+            <button class="add_notes" data-id="<%= s.id %>">Add Notes</button>
+        </div>
+
+        <!-- Hidden form for adding notes -->
+
+
+        
+    </div>
+            <form action="/add-notes" method="POST" class="add-notes-form" data-id="<%= s.id %>" hidden>
+            <input type="hidden" name="bookId" value="<%= s.id %>">
+            <label for="chapter-<%= s.id %>">Chapter</label>
+            <input type="text" id="chapter-<%= s.id %>" name="chapter" placeholder="Enter chapter name" required>
+            <label for="note-<%= s.id %>">Short Note</label>
+            <textarea id="note-<%= s.id %>" name="note" placeholder="Write a short note about the chapter" required></textarea>
+            <button type="submit">Submit Notes</button>
+        </form>
+    <div class="show-notes-div" data-id="<%= s.id %>" hidden></div>
+   <% }) %>
+</div>
+
+<script src="/js/bookAction.js"></script>
+</body>
+</html>

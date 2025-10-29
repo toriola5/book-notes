@@ -1,0 +1,266 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #181a1b;
+    color: #e0e0e0;
+}
+
+body.dark-mode .books,
+body.dark-mode .add-notes-form,
+body.dark-mode .show-notes-div,
+body.dark-mode form {
+    background-color: #23272a;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #23272a;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+body.dark-mode button {
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode button:hover {
+    background-color: #666;
+}
+
+/* Container for the books */
+.books-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next row if there's no space */
+    gap: 20px; /* Adds space between the cards */
+    justify-content: center; /* Centers the cards horizontally */
+    padding: 20px;
+}
+
+/* Individual book card styling */
+.books {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Fixed width for each card */
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.books img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.books p {
+    margin: 5px 0;
+}
+
+/* Hover effect for cards */
+.books:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Buttons styling */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 5px 0;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Default star style */
+.star {
+    font-size: 24px;
+    color: gray; /* Default color for unselected stars */
+}
+
+/* Gold color for selected stars */
+.star.gold {
+    color: gold;
+}
+
+/* Styling the form */
+form {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+form input,
+form select,
+form textarea,
+form button {
+    width: 100%; /* Ensure all inputs, textarea, and buttons have the same width */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+}
+
+form textarea {
+    resize: none; /* Disable resizing */
+    height: 120px; /* Fixed height */
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.add-notes-form{
+    width: 300px;
+}
+
+/* Styling for the show-notes-div */
+.show-notes-div {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Styling for individual note items */
+.note-item {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.note-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Center the action buttons */
+.actionables {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* space between buttons */
+    margin: 20px 0;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .books {
+        width: 100%; /* Make cards take full width on smaller screens */
+    }
+
+    form {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .show-notes-div {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .note-item {
+        padding: 8px;
+    }
+
+    .note-item button {
+        font-size: 10px;
+        padding: 5px;
+    }
+}
+
+/* Preferred color scheme: dark */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #181a1b;
+    color: #e0e0e0;
+  }
+  .books,
+  .add-notes-form,
+  .show-notes-div,
+  form {
+    background-color: #23272a;
+    color: #e0e0e0;
+    border-color: #333;
+  }
+  input,
+  select,
+  textarea {
+    background-color: #23272a;
+    color: #e0e0e0;
+    border-color: #444;
+  }
+  button {
+    background-color: #444;
+    color: #e0e0e0;
+  }
+  button:hover {
+    background-color: #666;
+  }
+}
