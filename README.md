@@ -46,15 +46,20 @@ Save this as database_schema.sql (you can import it in pgAdmin or run it from ps
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create notes table
-CREATE TABLE notes (. 
-    id SERIAL PRIMARY KEY,.  
-    book_id INT NOT NULL,.  
-    subject VARCHAR(255) NOT NULL,.
-    content TEXT,.
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,.
-    CONSTRAINT fk_book.
-        FOREIGN KEY (book_id).
-        REFERENCES books (id).
+* Create notes table
+CREATE TABLE notes (
+    id SERIAL PRIMARY KEY,
+    book_id INT NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_book
+        FOREIGN KEY (book_id)
+        REFERENCES books (id)
         ON DELETE CASCADE.
 );
+
+## Relationship
+📘 One-to-Many:
+Each book can have many notes.
+Each note belongs to one book (notes.book_id → books.id).
