@@ -47,14 +47,14 @@ Save this as database_schema.sql (you can import it in pgAdmin or run it from ps
 );
 
 -- Create notes table
-CREATE TABLE notes (
-    id SERIAL PRIMARY KEY,
-    book_id INT NOT NULL,
-    subject VARCHAR(255) NOT NULL,
-    content TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_book
-        FOREIGN KEY (book_id)
-        REFERENCES books (id)
-        ON DELETE CASCADE
+CREATE TABLE notes (. 
+    id SERIAL PRIMARY KEY,.  
+    book_id INT NOT NULL,.  
+    subject VARCHAR(255) NOT NULL,.
+    content TEXT,.
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,.
+    CONSTRAINT fk_book.
+        FOREIGN KEY (book_id).
+        REFERENCES books (id).
+        ON DELETE CASCADE.
 );
