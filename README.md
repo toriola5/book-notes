@@ -1,15 +1,15 @@
 # 📚 Book Notes
-Book Notes is a Node.js web application for tracking books, managing notes, and organizing your reading progress.
-It lets users add books with cover images, mark them as completed/not completed, rate them, and create chapter-based notes — all stored in a PostgreSQL database.
-The app also integrates with the Open Library Covers API to fetch book cover images automatically.
+Book Notes is a Node.js web application designed to help you keep track of your reading. It allows you to add books, record chapter-based notes, monitor your reading progress, and rate each title, with all data stored in a PostgreSQL database.
+The app automatically retrieves book covers via the Open Library Covers API, and enables you to mark books as completed or still in progress.
 
 # 🚀 Features
-* 📖 Add and view books with details (title, author, identifiers like ISBN, LCCN, OCLC, or OLID).
-* 🖼️ Automatically fetches book covers from the Open Library API — saves locally or via URL.
-* 📝 Add, view, and delete notes linked to individual books.
-* ⭐ Rate books and mark them as completed/not completed.
-* 🔍 Filter books by rating or completion status.
-* 🌓 Dark Mode Support — toggle manually or auto-switch based on system theme.
+* 📖 Add books 
+* 🖼️ Fetch book covers
+* View your books 
+* 📝 Add/view/delete notes attacahed to books
+* ⭐ Rate books and edit readint status
+* 🔍 Filter books;
+* 🌓 Dark Mode Support;
 * 🧠 Single-Page App (SPA)-like behavior: only re-renders when filtering books.
 * 🗄️ Uses PostgreSQL for persistent data storage.
 
@@ -23,25 +23,59 @@ The app also integrates with the Open Library Covers API to fetch book cover ima
 * API-Open Library Covers API
 * Version Control-Git
 
-## 🗄️ Database Setup
+
+
+### 🧠 How It Works
+* Users can add a new book by entering the title, author, and identifier. They may also provide a rating at this stage if they wish, though this can be done later instead.
+* The app fetches the cover image from the Open Library Covers API. If successful, the image is downloaded and saved to a designated path; otherwise, the image URL is stored in the database.
+* The home page lists all books.
+Each book:
+* Shows its Reading status (completed/not completed) and ratings
+* Allows users to add a rating if one has not already been given, and to update the Reading status
+* Lets users add and view chapter-based notes per book.
+* Dark mode toggles automatically if your system prefers dark theme or manually via a button.
+
+# 🧑‍💻 Contributing
+* Fork the repository
+* Create your feature branch 
+(git checkout -b feature/awesome-feature)
+* Commit your changes
+(git commit -m "Add awesome feature")
+* Push to the branch
+(git push origin feature/awesome-feature)
+* Open a Pull Request
+
+### 🪪 License
+* This project is licensed under the MIT License
+
+# installation and setup
+1. Clone the Repository (git clone https://github.com/toriola5/Book_app.git cd Book_app)
+2. Install Dependencies (npm install)
+
+3. Configure Environment Variables 
+* Create a .env file in the project root: 
+DB_USER=your_db_user. DB_PASSWORD=your_db_password. DB_NAME=booknotes. DB_HOST=localhost. DB_PORT=5432.  PORT=3000
+
+4. 🗄️ Database Setup
 Prerequisites
 You need PostgreSQL installed locally.
 If you don’t have it, visit the PostgreSQL Downloads page.
 
 ### Database Schema (SQL)
-Save this as database_schema.sql (you can import it in pgAdmin or run it from psql):
--- Create books table
-* CREATE TABLE books (
+  Run this codes on psql
+* Crete a new database of your choice.
+    CREATE DATABASE bookapp
+* Create books table
+CREATE TABLE books (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    author VARCHAR(255),
-    id_type VARCHAR(50),
-    Id_number INT,
+    title TEXT NOT NULL,
+    author TEXT NOT NULL,
+    id_type VARCHAR(50), // The book identification type
+    Id_number TEXT,  // The book identificaton number
     image_path TEXT,
     rating INT,
-    start_date DATE,
-    created_by VARCHAR(100),
-    is_complited BOOLEAN DEFAULT FALSE,
+    start_date DATE,  // The date you stared Reading the book;
+    is_complited BOOLEAN DEFAULT FALSE, //The reading status is set to false by default and it chages when you mark as completed
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -63,25 +97,7 @@ CREATE TABLE notes (
 Each book can have many notes.
 Each note belongs to one book (notes.book_id → books.id).
 
-### 🧠 How It Works
-* The user adds a new book by entering the title, author, and identifier.
-* The app fetches the cover image from the Open Library Covers API.
-* If successful, the image is downloaded and saved to public/uploads/; otherwise, the image URL is stored in the database.
-* The home page lists all books.
-Each book:
-* Shows its completion and rating status.
-* Allows users to rate and mark as completed.
-* Lets users add and view chapter-based notes.
-* Dark mode toggles automatically if your system prefers dark theme or manually via a button.
+5. Run the application 
+* npm start  (Ensure you have nodemon installed)
+* Open in browser (htpp://localhost:3000)
 
-# 🧑‍💻 Contributing
-* Fork the repository
-* Create your feature branch 
-(git checkout -b feature/awesome-feature)
-* Commit your changes
-(git commit -m "Add awesome feature")
-* Push to the branch
-(git push origin feature/awesome-feature)
-* Open a Pull Request
-### 🪪 License
-This project is licensed under the MIT License
