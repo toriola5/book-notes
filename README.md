@@ -58,7 +58,7 @@ DB_USER=your_db_user. DB_PASSWORD=your_db_password. DB_NAME=booknotes. DB_HOST=l
 
 4. 🗄️ Database Setup
 Prerequisites
-You need PostgreSQL installed locally.
+* You need PostgreSQL installed locally.
 If you don’t have it, visit the PostgreSQL Downloads page.
 
 ### Database Schema (SQL)
@@ -92,7 +92,7 @@ CREATE TABLE notes (
         ON DELETE CASCADE.
 );
 
-## Relationship
+### Relationship
 📘 One-to-Many:
 Each book can have many notes.
 Each note belongs to one book (notes.book_id → books.id).
