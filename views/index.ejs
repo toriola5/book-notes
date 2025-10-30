@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/styles.css">
-    <title>Document</title>
-</head>
-<body>
+<%- include("partials/header.ejs") %>
     <form action="/add" method="POST" id="addBookForm" hidden>
        <label for="booktitle">Book Title</label> <input type="text" name="title" id="booktitle" required> 
        <label for="authorname">Authors Name</label><input type="text" name="author" id="authorname" required>
@@ -110,5 +102,4 @@
 </div>
 
 <script src="/js/bookAction.js"></script>
-</body>
-</html>
+<%- include("partials/footer.ejs") %>
