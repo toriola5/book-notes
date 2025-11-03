@@ -1,17 +1,17 @@
 <%- include("partials/header.ejs") %>
 
 <div class="container">
-    <h1>Resend Verification Code</h1>
+    <h2>Resend Verification Code</h2>
     <p>Please input your email to resend the verification code:</p>
     
     <% if (typeof error !== 'undefined') { %>
-        <div class="error-message" style="color: red; margin-bottom: 15px;">
+        <div class="error-message">
             <%= error %>
         </div>
     <% } %>
     
     <% if (typeof success !== 'undefined') { %>
-        <div class="success-message" style="color: green; margin-bottom: 15px;">
+        <div class="success-message">
             <%= success %>
         </div>
     <% } %>
@@ -27,6 +27,8 @@
     
     <div class="back-link">
         <p><a href="/login">Back to Login</a></p>
+
+        <p> Register Your acount: <a href="/register">Register</a></p>
     </div>
 </div>
 

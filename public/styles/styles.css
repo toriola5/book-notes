@@ -6,6 +6,23 @@ body {
     box-sizing: border-box;
 }
 
+/* Simple elegant header */
+h1 {
+    text-align: center;
+    font-family: 'Georgia', serif;
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin: 20px 0;
+    padding: 20px;
+    border-bottom: 3px solid #3498db;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+}
+
+
+
+
+
 /* Dark mode styles */
 body.dark-mode {
     background-color: #181a1b;
@@ -37,6 +54,14 @@ body.dark-mode button {
 body.dark-mode button:hover {
     background-color: #666;
 }
+
+body.dark-mode h1 {
+    color: #ecf0f1;
+    background-color: #34495e;
+    border-bottom-color: #3498db;
+}
+
+
 
 /* Container for the books */
 .books-container {
@@ -207,6 +232,38 @@ form button:hover {
     align-items: center;
     gap: 15px; /* space between buttons */
     margin: 20px 0;
+}
+.container {
+    text-align: center;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover {
+    color: red !important;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #6f42c1;
+}
+
+a:active {
+    color: #e83e8c;
+}
+
+.error-message{
+    color: red; 
+    margin-bottom: 15px;
+}
+
+.success-message{
+    color: green;
+    margin-bottom: 15px;
 }
 
 /* Responsive design for smaller screens */

@@ -262,4 +262,10 @@ router.post("/reverify", async (req, res) => {
     }
 });
 
+router.get("/resend-code" , (req,res)=>{
+    res.render("reverify");
+})
+
+
+
 export default router;
