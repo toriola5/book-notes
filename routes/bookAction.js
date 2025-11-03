@@ -46,7 +46,6 @@ router.post("/update-rating/:id", async (req, res) => {
 router.post('/add-notes', async (req, res) => {
   const { bookId, chapter, note } = req.body;
   console.log(req.body)
-  res.json({ success: true, message: 'Note added successfully' });
 
   if (!bookId || !chapter || !note) {
     return res.status(400).json({ success: false, error: 'All fields are required' });

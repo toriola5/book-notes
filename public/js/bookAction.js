@@ -102,21 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // // Toggle visibility of the show-notes-div and update button text
-  // document.querySelectorAll('.show-notes-btn').forEach(button => {
-  //   button.addEventListener('click', (event) => {
-  //     const bookId = event.target.getAttribute('data-id');
-  //     const notesDiv = document.querySelector(`.show-notes-div[data-id="${bookId}"]`);
-
-  //     if (notesDiv.hasAttribute('hidden')) {
-  //       notesDiv.removeAttribute('hidden'); // Show the notes div
-  //       button.textContent = 'Collapse Notes'; // Update button text
-  //     } else {
-  //       notesDiv.setAttribute('hidden', ''); // Hide the notes div
-  //       button.textContent = 'Show Notes'; // Update button text
-  //     }
-  //   });
-  // });
 
 
 
@@ -146,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (error) {
         console.error('Error submitting form:', error);
-        alert('An error occurred while adding the note.');
+        alert(`An error occurred while adding the note. ${error}`);
       }
     });
   });
