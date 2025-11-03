@@ -5,25 +5,37 @@ import registerLogin from './routes/registration-login.js';
 import session from 'express-session';
 import passport from 'passport';
 import flash from 'connect-flash';
+import connectPgSimple from 'connect-pg-simple';
+import db from './db/index.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const app = express();
 const port = 3000;
 
+// Create PostgreSQL session store
+const pgSession = connectPgSimple(session);
+
+
 app.use(express.static("public"));
-app.set("view engine" , "ejs");
-app.use(express.urlencoded({extended : true}));
+app.set("view engine", "ejs");
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-
-// Session middleware (must come before passport)
+// Session middleware with PostgreSQL store.
 app.use(session({
+    store: new pgSession({
+        pool: db, // Use the dedicated session pool
+        tableName: 'session',
+        createTableIfMissing: true
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: false, // Set to true if using HTTPS
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        secure: false,
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
 
@@ -34,9 +46,10 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use ("/" , booksRouter);
+app.use("/", booksRouter);
 app.use("/books", bookUpdate);
-app.use("/", registerLogin)
-app.listen(port , async()=>{
-    console.log(`server started on port ${port}`);  
+app.use("/", registerLogin);
+
+app.listen(port, async() => {
+    console.log(`Server started on port ${port}`);  
 });

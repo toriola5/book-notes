@@ -1,13 +1,20 @@
 import pg from 'pg';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+
 dotenv.config();
 
-    const db = new pg.Client({
-      user : process.env.DB_USER,
-      host : process.env.DB_HOST,
-      database : process.env.DB_NAME,
-      password : process.env.DB_PASS,
-      port : process.env.DB_PORT
-    });
-db.connect();
+const { Pool } = pg;
+
+// Change from Client to Pool but keep the same export name
+const db = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
+    ssl: { rejectUnauthorized: false }
+});
+
 export default db;
+
+
