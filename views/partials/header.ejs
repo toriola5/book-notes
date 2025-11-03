@@ -7,3 +7,11 @@
     <title>Document</title>
 </head>
 <body>
+   <!-- Option 1: Using locals (more reliable) -->
+<% if(typeof locals.userName === 'undefined' || !locals.userName){ %>
+    <h1>The Book-Hive app</h1>
+<% } else { %>
+    <h1>Hello <%= userName %> Welcome to Your Book-Hive app</h1>
+<% } %>
+
+

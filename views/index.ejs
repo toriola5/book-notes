@@ -48,6 +48,7 @@
     <button id="toggleDarkMode" type="button">Toggle Dark Mode</button>
     <button id="showQueryFormBtn" type="button">Query Books</button>
     <button id="showFormBtn">Add New Book</button>
+    <a href="/logout"><button>Logout</button></a>
 </div>
 
    <div class="books-container">
@@ -89,6 +90,7 @@
 
         
     </div>
+    <div>
             <form action="/add-notes" method="POST" class="add-notes-form" data-id="<%= s.id %>" hidden>
             <input type="hidden" name="bookId" value="<%= s.id %>">
             <label for="chapter-<%= s.id %>">Chapter</label>
@@ -97,6 +99,7 @@
             <textarea id="note-<%= s.id %>" name="note" placeholder="Write a short note about the chapter" required></textarea>
             <button type="submit">Submit Notes</button>
         </form>
+    </div>
     <div class="show-notes-div" data-id="<%= s.id %>" hidden></div>
    <% }) %>
 </div>

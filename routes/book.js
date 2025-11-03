@@ -2,14 +2,20 @@ import express from "express";
 import {fetchImage} from "../services/apiService.js";
 import db from '../db/index.js'
 
-
-
-async function insertData(data){
-   await db.query("insert into books (title , author , image_path , rating , start_date , idtype , idnumber)values($1,$2,$3,$4,$5,$6,$7)", data)
+// Middleware to check if user is authenticated
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login');
 }
 
-async function getData(){
-    let result = await db.query("select id , title , author , image_path , rating , start_date, is_complited from books order by id asc");
+async function insertData(data){
+   await db.query("insert into books (title , author , image_path , rating , start_date , idtype , idnumber, user_id)values($1,$2,$3,$4,$5,$6,$7,$8)", data)
+}
+
+async function getData(userId){
+    let result = await db.query("select id , title , author , image_path , rating , start_date, is_complited from books where user_id = $1 order by id asc", [userId]);
     if(result.rowCount > 0){
         return result.rows
     }else{
@@ -17,19 +23,21 @@ async function getData(){
     }
 }
 
-
 const router = express.Router();
 
 let identifiers = ["ISBN" , "LCCN" , "OCLC" , "OLID"];
 const url = 'https://covers.openlibrary.org/b/';
 
-router.get("/" , async (req ,res)=>{
-    let data = await getData();
+// Apply authentication middleware to the home route
+router.get("/", ensureAuthenticated, async (req, res) => {
+    let data = await getData(req.user.id);
     console.log(data);
-    res.render("index" , {identifiers : identifiers , data : data})
+    res.render("index", {identifiers: identifiers, data: data, userName : req.user.firstname})
+    console.log(req.user);
 })
 
-router.post("/add", async (req, res) => {
+// Apply authentication middleware to other protected routes
+router.post("/add", ensureAuthenticated, async (req, res) => {
     const { title, author, rating, startdate, idnumber, identifier } = req.body;
     const sanitizedAuthor = author.replace(/\s+/g, '_');
     const imagePath = `./public/uploads/${sanitizedAuthor}${idnumber}.jpg`;
@@ -50,49 +58,44 @@ router.post("/add", async (req, res) => {
     }
 
     // Insert the book data into the database
-    
-    await insertData([title, author, path, actualRating, startdate, identifier, idnumber]);
+    await insertData([title, author, path, actualRating, startdate, identifier, idnumber, req.user.id]);
 
     console.log(`Image path: ${path}`);
     res.redirect("/");
 })
 
-router.get('/filter-books', async (req, res) => {
-  const { rating, completed } = req.query;
-  let query = 'SELECT * FROM books';
-  const params = [];
-  const conditions = [];
+router.get('/filter-books', ensureAuthenticated, async (req, res) => {
+    const { rating, completed } = req.query;
+    let query = 'SELECT * FROM books WHERE user_id = $1'; // Always filter by user_id first
+    const params = [req.user.id]; // Start with user_id as first parameter
+    const conditions = [];
 
-  if (rating) {
-    params.push(rating);
-    conditions.push(`rating = $${params.length}`);
-  }
-  if (completed === 'true' || completed === 'false') {
-    params.push(completed === 'true');
-    conditions.push(`is_complited = $${params.length}`);
-  }
+    if (rating) {
+        params.push(rating);
+        conditions.push(`rating = $${params.length}`);
+    }
+    if (completed === 'true' || completed === 'false') {
+        params.push(completed === 'true');
+        conditions.push(`is_complited = $${params.length}`);
+    }
 
-  if (conditions.length > 0) {
-    query += ' WHERE ' + conditions.join(' AND ');
-  }
+    if (conditions.length > 0) {
+        query += ' AND ' + conditions.join(' AND '); // Use AND since WHERE already exists
+    }
 
-  query += ' ORDER BY id DESC';
+    query += ' ORDER BY id DESC';
 
-  try {
-    const result = await db.query(query, params);
-    // Fetch identifiers for the add book form
-    res.render('index', {
-      data: result.rows,
-      identifiers: identifiers
-    });
-  } catch (err) {
-    console.error('Error filtering books:', err);
-    res.status(500).send('Server Error');
-  }
+    try {
+        const result = await db.query(query, params);
+        // Fetch identifiers for the add book form
+        res.render('index', {
+            data: result.rows,
+            identifiers: identifiers
+        });
+    } catch (err) {
+        console.error('Error filtering books:', err);
+        res.status(500).send('Server Error');
+    }
 });
 
-// add the mark as read button
-//if rating is not added add a button that allows to input rating
-//add notes 
-//All of this should be handled from the browser side
 export default router;
