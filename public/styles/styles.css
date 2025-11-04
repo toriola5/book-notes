@@ -130,6 +130,9 @@ button:hover {
 .star.gold {
     color: gold;
 }
+.star:hover{
+    cursor: pointer;
+}
 
 /* Styling the form */
 form {
