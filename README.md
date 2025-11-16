@@ -1,85 +1,167 @@
-# 📚 Book Notes
-Book Notes is a Node.js web application designed to help you keep track of your reading. It allows you to add books, record chapter-based notes, monitor your reading progress, and rate each title, with all data stored in a PostgreSQL database.
-The app automatically retrieves book covers via the Open Library Covers API, and enables you to mark books as completed or still in progress.
+# 📚 Book Notes Web Application
 
-# 🚀 Features
-* 📖 Add books 
-* 🖼️ Fetch book covers
-* View your books 
-* 📝 Add/view/delete notes attacahed to books
-* ⭐ Rate books and edit readint status
-* 🔍 Filter books;
-* 🌓 Dark Mode Support;
-* 🧠 Single-Page App (SPA)-like behavior: only re-renders when filtering books.
-* 🗄️ Uses PostgreSQL for persistent data storage.
+Book Notes is a comprehensive Node.js web application designed to help you manage your personal reading library. It allows you to add books, record chapter-based notes, monitor your reading progress, rate books, and maintain a personal account with secure authentication. All data is stored in a PostgreSQL database with session management for a seamless user experience.
 
+## 🚀 Features
+
+### 📖 Book Management
+* Add books with title, author, and ISBN/LCCN/OCLC/OL identifiers
+* Automatically fetch and download book covers via Open Library Covers API
+* View your personal book collection
+* Filter books by rating and completion status
+
+### 📝 Note Taking & Progress Tracking
+* Add, view, and delete chapter-based notes for each book
+* Mark books as completed or in-progress
+* Rate books with a 5-star system
+* Track reading start dates
+
+### 👤 User Authentication
+* User registration with email verification
+* Secure login/logout functionality
+* Email verification system with re-verification options
+* Session-based authentication using Passport.js
+
+### 🎨 User Experience
+* 🌓 Dark mode support (auto-detects system preference)
+* 📱 Responsive design for all devices
+* ⚡ SPA-like behavior with dynamic filtering
+* 🔔 Flash message notifications
 
 ## 🧩 Tech Stack
-* Backend-Node.js, Express.js
-* Database-PostgreSQL
-* Templating-EJS
-* Frontend-HTML, CSS, JavaScript
-* Environment-dotenv
-* API-Open Library Covers API
-* Version Control-Git
 
+### Backend
+* **Node.js** - Runtime environment
+* **Express.js** - Web framework
+* **PostgreSQL** - Database with connection pooling
+* **Passport.js** - Authentication middleware
+* **express-session** - Session management with PostgreSQL store
 
+### Frontend
+* **EJS** - Server-side templating
+* **HTML/CSS** - Responsive UI with dark mode
+* **Vanilla JavaScript** - Client-side interactions
 
-### 🧠 How It Works
-* Users can add a new book by entering the title, author, and identifier. They may also provide a rating at this stage if they wish, though this can be done later instead.
-* The app fetches the cover image from the Open Library Covers API. If successful, the image is downloaded and saved to a designated path; otherwise, the image URL is stored in the database.
-* The home page lists all books.
-Each book:
-* Shows its Reading status (completed/not completed) and ratings
-* Allows users to add a rating if one has not already been given, and to update the Reading status
-* Lets users add and view chapter-based notes per book.
-* Dark mode toggles automatically if your system prefers dark theme or manually via a button.
+### Services & APIs
+* **Nodemailer** - Email service integration
+* **Open Library Covers API** - Book cover fetching
+* **Multer** - File upload handling
+* **dotenv** - Environment configuration
 
-# 🧑‍💻 Contributing
-* Fork the repository
-* Create your feature branch 
-(git checkout -b feature/awesome-feature)
-* Commit your changes
-(git commit -m "Add awesome feature")
-* Push to the branch
-(git push origin feature/awesome-feature)
-* Open a Pull Request
+### Development
+* **Git** - Version control
+* **nodemon** - Development server
 
-### 🪪 License
-* This project is licensed under the MIT License
+## 🏗️ Architecture
 
-# installation and setup
-1. Clone the Repository (git clone https://github.com/toriola5/Book_app.git cd Book_app)
-2. Install Dependencies (npm install)
+### Database Schema
+The application uses three main tables:
 
-3. Configure Environment Variables 
-* Create a .env file in the project root: 
-DB_USER=your_db_user. DB_PASSWORD=your_db_password. DB_NAME=booknotes. DB_HOST=localhost. DB_PORT=5432.  PORT=3000
+1. **users** - User accounts and authentication
+2. **books** - Book information and metadata
+3. **notes** - Chapter-based notes linked to books
+4. **session** - Session storage (auto-created)
 
-4. 🗄️ Database Setup
-Prerequisites
-* You need PostgreSQL installed locally.
-If you don’t have it, visit the PostgreSQL Downloads page.
+### Project Structure
+```
+Book_app/
+├── db/                     # Database configuration
+├── routes/                 # Express route handlers
+│   ├── book.js            # Book CRUD operations
+│   ├── bookAction.js      # Book interactions (rating, status)
+│   └── registration-login.js # Authentication routes
+├── views/                  # EJS templates
+│   ├── partials/          # Reusable components
+│   └── *.ejs             # Page templates
+├── public/                # Static assets
+│   ├── styles/           # CSS files
+│   ├── js/              # Client-side JavaScript
+│   └── uploads/         # Downloaded book covers
+├── services/             # External API services
+└── index.js             # Main application entry point
+```
 
-### Database Schema (SQL)
-  Run this codes on psql
-* Crete a new database of your choice.
-    CREATE DATABASE bookapp
-* Create books table
-CREATE TABLE books (
+## 🛠️ Installation and Setup
+
+### Prerequisites
+* **Node.js** (v14 or higher)
+* **PostgreSQL** (v12 or higher)
+* **Git**
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/toriola5/Book_app.git
+cd Book_app
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+Create a `.env` file in the project root:
+
+```env
+# Database Configuration
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=booknotes
+DB_HOST=localhost
+DB_PORT=5432
+
+# Server Configuration
+PORT=3000
+
+# Session Security
+SESSION_SECRET=your_very_secure_session_secret
+
+# Email Configuration (for verification)
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+```
+
+### 4. Database Setup
+
+#### Create Database
+```sql
+CREATE DATABASE booknotes;
+```
+
+#### Create Tables
+```sql
+-- Users table
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    author TEXT NOT NULL,
-    id_type VARCHAR(50), // The book identification type
-    Id_number TEXT,  // The book identificaton number
-    image_path TEXT,
-    rating INT,
-    start_date DATE,  // The date you stared Reading the book;
-    is_complited BOOLEAN DEFAULT FALSE, //The reading status is set to false by default and it chages when you mark as completed
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_verified BOOLEAN DEFAULT FALSE,
+    verification_code VARCHAR(6),
+    verification_expires TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-* Create notes table
+-- Books table
+CREATE TABLE books (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    title TEXT NOT NULL,
+    author TEXT NOT NULL,
+    id_type VARCHAR(50),
+    id_number TEXT,
+    image_path TEXT,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    start_date DATE DEFAULT CURRENT_DATE,
+    is_completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+        REFERENCES users (id)
+        ON DELETE CASCADE
+);
+
+-- Notes table
 CREATE TABLE notes (
     id SERIAL PRIMARY KEY,
     book_id INT NOT NULL,
@@ -89,15 +171,79 @@ CREATE TABLE notes (
     CONSTRAINT fk_book
         FOREIGN KEY (book_id)
         REFERENCES books (id)
-        ON DELETE CASCADE.
+        ON DELETE CASCADE
 );
+```
 
-### Relationship
-📘 One-to-Many:
-Each book can have many notes.
-Each note belongs to one book (notes.book_id → books.id).
+### 5. Run the Application
+```bash
+# Development mode with nodemon
+npm run dev
 
-5. Run the application 
-* npm start  (Ensure you have nodemon installed)
-* Open in browser (htpp://localhost:3000)
+# Production mode
+npm start
+```
 
+### 6. Access the Application
+Open your browser and navigate to `http://localhost:3000`
+
+## 🧠 How It Works
+
+### User Journey
+1. **Registration**: Create account with email verification
+2. **Login**: Secure authentication with session management
+3. **Add Books**: Enter book details, app fetches cover automatically
+4. **Track Reading**: Mark progress, add ratings, take notes
+5. **Organize**: Filter and view your personal library
+
+### Key Features
+* **Automatic Cover Fetching**: Uses Open Library API to download book covers
+* **Session Management**: PostgreSQL-backed sessions for security
+* **Email Verification**: Ensures valid user accounts
+* **Responsive Design**: Works on desktop, tablet, and mobile
+* **Dark Mode**: Automatic detection with manual toggle
+
+## 🧑‍💻 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/awesome-feature`)
+3. Commit your changes (`git commit -m 'Add awesome feature'`)
+4. Push to the branch (`git push origin feature/awesome-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+* Follow existing code style and structure
+* Add comments for complex functionality
+* Test new features thoroughly
+* Update documentation as needed
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Database Connection Error**
+* Ensure PostgreSQL is running
+* Verify database credentials in `.env`
+* Check if database and tables exist
+
+**Email Verification Not Working**
+* Configure email settings in `.env`
+* For Gmail, use app-specific passwords
+* Check spam folder for verification emails
+
+**Book Covers Not Loading**
+* Verify internet connection for Open Library API
+* Check `public/uploads` directory permissions
+* Ensure proper book identifier format
+
+## 🚀 Future Enhancements
+
+* 📊 Reading statistics and analytics
+* 📚 Book recommendations
+* 👥 Social features and book sharing
+* 📱 Mobile app development
+* 🔍 Advanced search and categorization
