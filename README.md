@@ -15,13 +15,17 @@ The app automatically retrieves book covers via the Open Library Covers API, and
 
 
 ## 🧩 Tech Stack
-* Backend-Node.js, Express.js
-* Database-PostgreSQL
-* Templating-EJS
-* Frontend-HTML, CSS, JavaScript
-* Environment-dotenv
-* API-Open Library Covers API
-* Version Control-Git
+
+| Category        | Technologies              |
+|-----------------|----------------------------|
+| Backend         | Node.js, Express.js        |
+| Database        | PostgreSQL                 |
+| Templating      | EJS                        |
+| Frontend        | HTML, CSS, JavaScript      |
+| Environment     | dotenv                     |
+| API             | Open Library Covers API    |
+| Version Control | Git                        |
+
 
 
 
@@ -48,13 +52,21 @@ Each book:
 ### 🪪 License
 * This project is licensed under the MIT License
 
-# installation and setup
-1. Clone the Repository (git clone https://github.com/toriola5/Book_app.git cd Book_app)
+# Installation and setup
+1. Clone the Repository [Github](https://github.com/toriola5/Book_app.git) cd Book_app
 2. Install Dependencies (npm install)
 
-3. Configure Environment Variables 
-* Create a .env file in the project root: 
-DB_USER=your_db_user. DB_PASSWORD=your_db_password. DB_NAME=booknotes. DB_HOST=localhost. DB_PORT=5432.  PORT=3000
+4. Configure Environment Variables 
+### Create a `.env` file in the project root
+
+```env
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=booknotes
+DB_HOST=localhost
+DB_PORT=5432
+PORT=3000
+```
 
 4. 🗄️ Database Setup
 Prerequisites
@@ -64,34 +76,36 @@ If you don’t have it, visit the PostgreSQL Downloads page.
 ### Database Schema (SQL)
   Run this codes on psql
 * Crete a new database of your choice.
-    CREATE DATABASE bookapp
-* Create books table
+
+```sql
+CREATE DATABASE bookapp
+Create books table
 CREATE TABLE books (
-    id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    author TEXT NOT NULL,
-    id_type VARCHAR(50), // The book identification type
-    Id_number TEXT,  // The book identificaton number
-    image_path TEXT,
-    rating INT,
-    start_date DATE,  // The date you stared Reading the book;
-    is_complited BOOLEAN DEFAULT FALSE, //The reading status is set to false by default and it chages when you mark as completed
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+id SERIAL PRIMARY KEY,
+title TEXT NOT NULL,
+author TEXT NOT NULL,
+id_type VARCHAR(50), // The book identification type
+Id_number TEXT,  // The book identificaton number
+image_path TEXT,
+rating INT,
+start_date DATE,  // The date you stared Reading the book;
+is_complited BOOLEAN DEFAULT FALSE, //The reading status is set to false by default and it chages when you mark as completed
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-* Create notes table
+Create notes table
 CREATE TABLE notes (
-    id SERIAL PRIMARY KEY,
-    book_id INT NOT NULL,
-    subject VARCHAR(255) NOT NULL,
-    content TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_book
-        FOREIGN KEY (book_id)
-        REFERENCES books (id)
-        ON DELETE CASCADE.
+id SERIAL PRIMARY KEY,
+book_id INT NOT NULL,
+subject VARCHAR(255) NOT NULL,
+content TEXT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT fk_book
+FOREIGN KEY (book_id)
+REFERENCES books (id)
+ON DELETE CASCADE.
 );
-
+```
 ### Relationship
 📘 One-to-Many:
 Each book can have many notes.
