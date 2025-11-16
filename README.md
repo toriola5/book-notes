@@ -5,56 +5,65 @@ Book Notes is a comprehensive Node.js web application designed to help you manag
 ## 🚀 Features
 
 ### 📖 Book Management
-* Add books with title, author, and ISBN/LCCN/OCLC/OL identifiers
-* Automatically fetch and download book covers via Open Library Covers API
-* View your personal book collection
-* Filter books by rating and completion status
+
+- Add books with title, author, and ISBN/LCCN/OCLC/OL identifiers
+- Automatically fetch and download book covers via Open Library Covers API
+- View your personal book collection
+- Filter books by rating and completion status
 
 ### 📝 Note Taking & Progress Tracking
-* Add, view, and delete chapter-based notes for each book
-* Mark books as completed or in-progress
-* Rate books with a 5-star system
-* Track reading start dates
+
+- Add, view, and delete chapter-based notes for each book
+- Mark books as completed or in-progress
+- Rate books with a 5-star system
+- Track reading start dates
 
 ### 👤 User Authentication
-* User registration with email verification
-* Secure login/logout functionality
-* Email verification system with re-verification options
-* Session-based authentication using Passport.js
+
+- User registration with email verification
+- Secure login/logout functionality
+- Email verification system with re-verification options
+- Session-based authentication using Passport.js
 
 ### 🎨 User Experience
-* 🌓 Dark mode support (auto-detects system preference)
-* 📱 Responsive design for all devices
-* ⚡ SPA-like behavior with dynamic filtering
-* 🔔 Flash message notifications
+
+- 🌓 Dark mode support (auto-detects system preference)
+- 📱 Responsive design for all devices
+- ⚡ SPA-like behavior with dynamic filtering
+- 🔔 Flash message notifications
 
 ## 🧩 Tech Stack
 
 ### Backend
-* **Node.js** - Runtime environment
-* **Express.js** - Web framework
-* **PostgreSQL** - Database with connection pooling
-* **Passport.js** - Authentication middleware
-* **express-session** - Session management with PostgreSQL store
+
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **PostgreSQL** - Database with connection pooling
+- **Passport.js** - Authentication middleware
+- **express-session** - Session management with PostgreSQL store
 
 ### Frontend
-* **EJS** - Server-side templating
-* **HTML/CSS** - Responsive UI with dark mode
-* **Vanilla JavaScript** - Client-side interactions
+
+- **EJS** - Server-side templating
+- **HTML/CSS** - Responsive UI with dark mode
+- **Vanilla JavaScript** - Client-side interactions
 
 ### Services & APIs
-* **Nodemailer** - Email service integration
-* **Open Library Covers API** - Book cover fetching
-* **Multer** - File upload handling
-* **dotenv** - Environment configuration
+
+- **Nodemailer** - Email service integration
+- **Open Library Covers API** - Book cover fetching
+- **Multer** - File upload handling
+- **dotenv** - Environment configuration
 
 ### Development
-* **Git** - Version control
-* **nodemon** - Development server
+
+- **Git** - Version control
+- **nodemon** - Development server
 
 ## 🏗️ Architecture
 
 ### Database Schema
+
 The application uses three main tables:
 
 1. **users** - User accounts and authentication
@@ -63,6 +72,7 @@ The application uses three main tables:
 4. **session** - Session storage (auto-created)
 
 ### Project Structure
+
 ```
 Book_app/
 ├── db/                     # Database configuration
@@ -84,22 +94,26 @@ Book_app/
 ## 🛠️ Installation and Setup
 
 ### Prerequisites
-* **Node.js** (v14 or higher)
-* **PostgreSQL** (v12 or higher)
-* **Git**
+
+- **Node.js** (v14 or higher)
+- **PostgreSQL** (v12 or higher)
+- **Git**
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/toriola5/Book_app.git
 cd Book_app
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 3. Configure Environment Variables
+
 Create a `.env` file in the project root:
 
 ```env
@@ -124,11 +138,13 @@ EMAIL_PASS=your_app_password
 ### 4. Database Setup
 
 #### Create Database
+
 ```sql
 CREATE DATABASE booknotes;
 ```
 
 #### Create Tables
+
 ```sql
 -- Users table
 CREATE TABLE users (
@@ -176,6 +192,7 @@ CREATE TABLE notes (
 ```
 
 ### 5. Run the Application
+
 ```bash
 # Development mode with nodemon
 npm run dev
@@ -185,11 +202,13 @@ npm start
 ```
 
 ### 6. Access the Application
+
 Open your browser and navigate to `http://localhost:3000`
 
 ## 🧠 How It Works
 
 ### User Journey
+
 1. **Registration**: Create account with email verification
 2. **Login**: Secure authentication with session management
 3. **Add Books**: Enter book details, app fetches cover automatically
@@ -197,11 +216,12 @@ Open your browser and navigate to `http://localhost:3000`
 5. **Organize**: Filter and view your personal library
 
 ### Key Features
-* **Automatic Cover Fetching**: Uses Open Library API to download book covers
-* **Session Management**: PostgreSQL-backed sessions for security
-* **Email Verification**: Ensures valid user accounts
-* **Responsive Design**: Works on desktop, tablet, and mobile
-* **Dark Mode**: Automatic detection with manual toggle
+
+- **Automatic Cover Fetching**: Uses Open Library API to download book covers
+- **Session Management**: PostgreSQL-backed sessions for security
+- **Email Verification**: Ensures valid user accounts
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Dark Mode**: Automatic detection with manual toggle
 
 ## 🧑‍💻 Contributing
 
@@ -212,10 +232,11 @@ Open your browser and navigate to `http://localhost:3000`
 5. Open a Pull Request
 
 ### Development Guidelines
-* Follow existing code style and structure
-* Add comments for complex functionality
-* Test new features thoroughly
-* Update documentation as needed
+
+- Follow existing code style and structure
+- Add comments for complex functionality
+- Test new features thoroughly
+- Update documentation as needed
 
 ## 📄 License
 
@@ -226,24 +247,27 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Common Issues
 
 **Database Connection Error**
-* Ensure PostgreSQL is running
-* Verify database credentials in `.env`
-* Check if database and tables exist
+
+- Ensure PostgreSQL is running
+- Verify database credentials in `.env`
+- Check if database and tables exist
 
 **Email Verification Not Working**
-* Configure email settings in `.env`
-* For Gmail, use app-specific passwords
-* Check spam folder for verification emails
+
+- Configure email settings in `.env`
+- For Gmail, use app-specific passwords
+- Check spam folder for verification emails
 
 **Book Covers Not Loading**
-* Verify internet connection for Open Library API
-* Check `public/uploads` directory permissions
-* Ensure proper book identifier format
+
+- Verify internet connection for Open Library API
+- Check `public/uploads` directory permissions
+- Ensure proper book identifier format
 
 ## 🚀 Future Enhancements
 
-* 📊 Reading statistics and analytics
-* 📚 Book recommendations
-* 👥 Social features and book sharing
-* 📱 Mobile app development
-* 🔍 Advanced search and categorization
+- 📊 Reading statistics and analytics
+- 📚 Book recommendations
+- 👥 Social features and book sharing
+- 📱 Mobile app development
+- 🔍 Advanced search and categorization
